@@ -25,6 +25,15 @@ class Home extends Common
      */
     protected function _initialize()
     {
+//        dump(session('wechat_user'));exit;
+
+        if (session('wechat_user')){
+                 
+        }else{
+
+            $this->redirect(url('index/wx/access'));
+
+        }
         // 系统开关
         if (!config('web_site_status')) {
             $this->error('站点已经关闭，请稍后访问~');

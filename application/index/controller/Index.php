@@ -16,6 +16,7 @@ use app\cms\model\Online;
 use app\cms\model\Service;
 use app\cms\model\Shop;
 use app\cms\model\Zushou;
+use think\Db;
 
 /**
  * 前台首页控制器
@@ -122,13 +123,32 @@ class Index extends Home
         return $this->fetch();
    }
 
+//    public function my()
+//    {
+//      $user= session('user');
+//      if($user===null){
+//          $this->error('您还未登录','login/login');
+//      }
+//        $this->assign('user',$user);
+//        return $this->fetch();
+//   }
     public function my()
     {
-      $user= session('user');
-      if($user===null){
-          $this->error('您还未登录','login/login');
-      }
-        $this->assign('user',$user);
+//
+
+        $openId=session('wechat_user.id');
+
+        $user=Db::name('cms_user')->where(['open_id'=>$openId])->find();
+
+        if ($user){
+
+        }
+        $this->assign($user);
+        return $this->fetch();//
+    }
+
+    public function faxian()
+    {
         return $this->fetch();
    }
 }
