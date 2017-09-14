@@ -26,4 +26,5 @@ class Index extends Common
     {
         return $this->fetch(); // 渲染模板
     }
+
 }

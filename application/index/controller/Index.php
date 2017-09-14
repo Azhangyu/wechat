@@ -10,6 +10,12 @@
 // +----------------------------------------------------------------------
 
 namespace app\index\controller;
+use app\cms\model\Activity;
+use app\cms\model\Notice;
+use app\cms\model\Online;
+use app\cms\model\Service;
+use app\cms\model\Shop;
+use app\cms\model\Zushou;
 
 /**
  * 前台首页控制器
@@ -19,10 +25,110 @@ class Index extends Home
 {
     public function index()
     {
-        // 默认跳转模块
-        if (config('home_default_module') != 'index') {
-            $this->redirect(config('home_default_module'). '/index/index');
-        }
-        return '<style type="text/css">*{ padding: 0; margin: 0; } .think_default_text{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p> DolphinPHP V1.0.0<br/><span style="font-size:30px">极速 · 极简 · 极致</span></p></div>';
+
+          return $this->fetch();
+
     }
+    public function notice(){
+        $notices = Notice::all();
+//        dump($notices);exit;
+        $this->assign('notices',$notices);
+        return $this->fetch();
+    }
+
+    public function notice_detail($id)
+    {
+        $notices = Notice::get($id);
+//        dump($notices);exit;
+        $this->assign('notices',$notices);
+        return $this->fetch();
+    }
+
+    public function service()
+    {
+        $service = Service::all();
+        $this->assign('services',$service);
+        return $this->fetch();
+    }
+    public function service_detail($id)
+    {
+        $service = Service::get($id);
+        $this->assign('services',$service);
+        return $this->fetch();
+    }
+
+    public function shop()
+{
+    $shops = Shop::all();
+    $this->assign('shops',$shops);
+    return $this->fetch();
+ }
+    public function shop_detail($id)
+    {
+        $shops = Shop::get($id);
+        $this->assign('shops',$shops);
+        return $this->fetch();
+    }
+
+    public function activity()
+    {
+      $activitys = Activity::all();
+      $this->assign('activitys',$activitys);
+      return $this->fetch();
+    }
+    public function activity_detail($id)
+    {
+//        dump($id);exit;
+        $activitys = Activity::get($id);
+//        dump($activitys);exit;
+        $this->assign('activitys',$activitys);
+        return $this->fetch();
+    }
+
+    public function zushou()
+    {
+        $zus = Zushou::all(['type'=>1]);
+        $shous = Zushou::all(['type'=>0]);
+//        dump($zu);exit;
+        $this->assign('zus',$zus);
+        $this->assign('shous',$shous);
+        return $this->fetch();
+   }
+
+    public function zushou_detail($id)
+    {
+        $zushou = Zushou::get($id);
+        $this->assign('zushou',$zushou);
+        return $this->fetch();
+   }
+
+    public function online()
+    {
+//        dump(time());exit;
+        if ($this->request->Post()) {
+            $onlineModel = new Online();
+            //生成唯一单号
+            $sn =   date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+            //报修时间
+
+            $data = input('post.');
+            $onlineModel->sn = $sn;
+            $onlineModel->start_time=time();
+            //状态标记为未处理
+            $onlineModel->status = 0;
+            $onlineModel->save($data);
+            $this->success('申请保修成功,正在为您跳转到主页','index');
+        }
+        return $this->fetch();
+   }
+
+    public function my()
+    {
+      $user= session('user');
+      if($user===null){
+          $this->error('您还未登录','login/login');
+      }
+        $this->assign('user',$user);
+        return $this->fetch();
+   }
 }

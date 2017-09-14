@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    {block name="page-title"}<title>{$page_title|default='后台'} | {:config('web_site_title')} - DolphinPHP</title>{/block}
+    {block name="page-title"}<title>{$page_title|default='后台'} | {:config('web_site_title')} - DolphinHP</title>{/block}
 
     <meta name="description" content="{:config('web_site_description')}">
     <meta name="author" content="caiweiming">
@@ -256,11 +256,13 @@
             <li>
                 <div class="btn-group">
                     <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button">
-                        <img src="{$Think.session.user_auth.avatar|get_avatar}" alt="{:session('user_auth.username')}">
+                        <img src="/public/static1/images/8-grub.png" alt="{:session('user_auth.username')}">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-header">{:session('user_auth.username')} ({:session('user_auth.role_name')})</li>
+                        <li class="dropdown-header">{:session('user_auth.username')} ({:session('user_auth.role_na
+
+                            me')})</li>
                         <li>
                             <a tabindex="-1" href="{:url('admin/index/profile')}">
                                 <i class="si si-settings pull-right"></i>个人设置
@@ -360,7 +362,7 @@
     {empty name="_pop"}
     <footer id="page-footer" class="content-mini content-mini-full font-s12 bg-gray-lighter clearfix">
         <div class="pull-right">
-            Crafted with <i class="fa fa-heart text-city"></i> by <a class="font-w600" href="{:config('dolphin.company_website')}" target="_blank">{:config('dolphin.company_name')}</a>
+            Craftedthis <i class="fa fa-heart text-city"></i> by <a class="font-w600" href="#" target="_blank">渝哥科技有限公司</a>
         </div>
         <div class="pull-left">
             <a class="font-w600" href="{:config('dolphin.product_website')}" target="_blank">{:config('dolphin.product_name')} {:config('dolphin.product_version')}</a> &copy; <span class="js-year-copy"></span>
